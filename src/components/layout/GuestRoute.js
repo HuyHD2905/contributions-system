@@ -8,10 +8,10 @@ const GuestRoute = () => {
 				<NavLink to="/"></NavLink>
 			</li>
 			<li>
-				<NavLink to="/">Signup</NavLink>
+				<NavLink to="/signup">Signup</NavLink>
 			</li>
 			<li>
-				<NavLink to="/">Signin</NavLink>
+				<NavLink to="/signin">Signin</NavLink>
 			</li>
 		</ul>
 	);
