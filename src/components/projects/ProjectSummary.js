@@ -6,7 +6,8 @@ const ProjectSummary = ({ project }) => {
 			<div className="card-content grey-text text-darken-3">
 				<span className="card-title">{project.title}</span>
 				<p>{project.author}</p>
-				<p className="grey-text">{project.createAt}</p>
+				<p>{project.content}</p>
+				{/* <p className="grey-text">{project.createdAt}</p> */}
 			</div>
 		</div>
 	);
