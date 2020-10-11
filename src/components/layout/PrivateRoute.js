@@ -1,7 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { signOut } from "../../store/actions/authAction";
 
-const PrivateRoute = () => {
+const PrivateRoute = (props) => {
 	return (
 		<ul className="right">
 			<li>
@@ -17,7 +19,7 @@ const PrivateRoute = () => {
 				<NavLink to="/">Create Student</NavLink>
 			</li>
 			<li>
-				<NavLink to="/">Logout</NavLink>
+				<a onClick={props.signOut}>Logout</a>
 			</li>
 			<li>
 				<NavLink to="/" className="btn btn-floating pink lighten-1">
@@ -28,4 +30,10 @@ const PrivateRoute = () => {
 	);
 };
 
-export default PrivateRoute;
+const mapDispatchToProps = (dispatch) => {
+	return {
+		signOut: () => dispatch(signOut()),
+	};
+};
+
+export default connect(null, mapDispatchToProps)(PrivateRoute);
