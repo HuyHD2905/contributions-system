@@ -8,7 +8,10 @@ const PrivateRoute = () => {
 				<NavLink to="/"></NavLink>
 			</li>
 			<li>
-				<NavLink to="/">Create Manager</NavLink>
+				<NavLink to="/project">Project</NavLink>
+			</li>
+			<li>
+				<NavLink to="/project/create">Create Project</NavLink>
 			</li>
 			<li>
 				<NavLink to="/">Create Student</NavLink>
