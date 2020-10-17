@@ -1,37 +1,114 @@
-import React from "react";
+import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authAction";
+import { Role } from "../../config/common";
 
-const PrivateRoute = (props) => {
-	const { profile, signOut } = props;
+class PrivateRoute extends Component {
+	render() {
+		const { profile, signOut } = this.props;
 
-	return (
-		<ul className="right">
-			<li>
-				<NavLink to="/"></NavLink>
-			</li>
-			<li>
-				<NavLink to="/project">Project</NavLink>
-			</li>
-			<li>
-				<NavLink to="/project/create">Create Project</NavLink>
-			</li>
-			<li>
-				<NavLink to="/">Create Student</NavLink>
-			</li>
-			<li>
-				<a onClick={signOut}>Logout</a>
-			</li>
-			<li>
-				<NavLink to="/" className="btn btn-floating pink lighten-1">
-					{profile.firstName !== undefined ? profile.firstName.charAt(0) : null}
-					{profile.lastName !== undefined ? profile.lastName.charAt(0) : null}
-				</NavLink>
-			</li>
-		</ul>
-	);
-};
+		if (profile.role === Role.Admin) {
+			return (
+				<ul className="right">
+					<li>
+						<NavLink to="/"></NavLink>
+					</li>
+					<li>
+						<NavLink to="/create/manager">Create Manager</NavLink>
+					</li>
+					<li>
+						<a onClick={signOut}>Logout</a>
+					</li>
+					<li>
+						<NavLink to="/" className="btn btn-floating pink lighten-1">
+							{profile.firstName !== undefined
+								? profile.firstName.charAt(0)
+								: null}
+							{profile.lastName !== undefined
+								? profile.lastName.charAt(0)
+								: null}
+						</NavLink>
+					</li>
+				</ul>
+			);
+		}
+
+		if (profile.role === Role.Manager) {
+			return (
+				<ul className="right">
+					<li>
+						<NavLink to="/"></NavLink>
+					</li>
+					<li>
+						<NavLink to="/create/coordinator">Create Coordinator</NavLink>
+					</li>
+					<li>
+						<NavLink to="/create/student">Create Student</NavLink>
+					</li>
+					<li>
+						<a onClick={signOut}>Logout</a>
+					</li>
+					<li>
+						<NavLink to="/" className="btn btn-floating pink lighten-1">
+							{profile.firstName !== undefined
+								? profile.firstName.charAt(0)
+								: null}
+							{profile.lastName !== undefined
+								? profile.lastName.charAt(0)
+								: null}
+						</NavLink>
+					</li>
+				</ul>
+			);
+		}
+
+		if (profile.role === Role.Coordinator) {
+			return (
+				<ul className="right">
+					<li>
+						<NavLink to="/"></NavLink>
+					</li>
+					<li>
+						<NavLink to="/create/student">Create Student</NavLink>
+					</li>
+					<li>
+						<a onClick={signOut}>Logout</a>
+					</li>
+					<li>
+						<NavLink to="/" className="btn btn-floating pink lighten-1">
+							{profile.firstName !== undefined
+								? profile.firstName.charAt(0)
+								: null}
+							{profile.lastName !== undefined
+								? profile.lastName.charAt(0)
+								: null}
+						</NavLink>
+					</li>
+				</ul>
+			);
+		}
+
+		return (
+			<ul className="right">
+				<li>
+					<NavLink to="/"></NavLink>
+				</li>
+				<li>
+					<a onClick={signOut}>Logout</a>
+				</li>
+				<li>
+					<NavLink to="/" className="btn btn-floating pink lighten-1">
+						{profile.firstName !== undefined
+							? profile.firstName.charAt(0)
+							: null}
+						{profile.lastName !== undefined ? profile.lastName.charAt(0) : null}
+					</NavLink>
+				</li>
+			</ul>
+		);
+	}
+}
 
 const mapDispatchToProps = (dispatch) => {
 	return {

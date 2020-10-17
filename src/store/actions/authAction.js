@@ -1,3 +1,5 @@
+import { Role } from "../../config/common";
+
 export const signIn = (credentials) => {
 	return (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();
@@ -32,6 +34,7 @@ export const signOut = () => {
 	};
 };
 
+// Create Admin System account
 export const signUp = (credentials) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		const firebase = getFirebase();
@@ -44,6 +47,8 @@ export const signUp = (credentials) => {
 				return firestore.collection("users").doc(response.user.uid).set({
 					firstName: credentials.firstName,
 					lastName: credentials.lastName,
+					role: credentials.role,
+					faculty: credentials.faculty,
 				});
 			})
 			.then(() => {

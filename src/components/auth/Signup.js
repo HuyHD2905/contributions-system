@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signUp } from "../../store/actions/authAction";
+import { Role } from "../../config/common";
 
 class Signup extends Component {
 	state = {
@@ -9,6 +10,8 @@ class Signup extends Component {
 		password: "",
 		firstName: "",
 		lastName: "",
+		role: Role.Admin,
+		faculty: "All",
 	};
 
 	handleChange = (e) => {
