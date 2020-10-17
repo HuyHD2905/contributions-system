@@ -5,7 +5,6 @@ import { signOut } from "../../store/actions/authAction";
 
 const PrivateRoute = (props) => {
 	const { profile, signOut } = props;
-	console.log(profile);
 
 	return (
 		<ul className="right">
