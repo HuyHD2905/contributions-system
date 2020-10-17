@@ -5,7 +5,7 @@ import GuestRoute from "./GuestRoute";
 import { connect } from "react-redux";
 
 const Navbar = (props) => {
-	const { auth } = props;
+	const { auth, profile } = props;
 
 	return (
 		<nav className="nav-wrapper grey darken-3">
@@ -13,7 +13,7 @@ const Navbar = (props) => {
 				<Link to="/" className="brand-logo">
 					Contribution System
 				</Link>
-				{auth.uid ? <PrivateRoute /> : <GuestRoute />}
+				{auth.uid ? <PrivateRoute profile={profile} /> : <GuestRoute />}
 			</div>
 		</nav>
 	);
@@ -22,6 +22,7 @@ const Navbar = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		auth: state.firebase.auth,
+		profile: state.firebase.profile,
 	};
 };
 

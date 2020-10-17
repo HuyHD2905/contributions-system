@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authAction";
 
 const PrivateRoute = (props) => {
+	const { profile, signOut } = props;
+	console.log(profile);
+
 	return (
 		<ul className="right">
 			<li>
@@ -19,11 +22,12 @@ const PrivateRoute = (props) => {
 				<NavLink to="/">Create Student</NavLink>
 			</li>
 			<li>
-				<a onClick={props.signOut}>Logout</a>
+				<a onClick={signOut}>Logout</a>
 			</li>
 			<li>
 				<NavLink to="/" className="btn btn-floating pink lighten-1">
-					HuyHD
+					{profile.firstName !== undefined ? profile.firstName.charAt(0) : null}
+					{profile.lastName !== undefined ? profile.lastName.charAt(0) : null}
 				</NavLink>
 			</li>
 		</ul>

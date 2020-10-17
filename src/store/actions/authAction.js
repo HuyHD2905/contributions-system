@@ -31,3 +31,26 @@ export const signOut = () => {
 			});
 	};
 };
+
+export const signUp = (credentials) => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		const firebase = getFirebase();
+		const firestore = getFirestore();
+
+		firebase
+			.auth()
+			.createUserWithEmailAndPassword(credentials.email, credentials.password)
+			.then((response) => {
+				return firestore.collection("users").doc(response.user.uid).set({
+					firstName: credentials.firstName,
+					lastName: credentials.lastName,
+				});
+			})
+			.then(() => {
+				dispatch({ type: "SIGNUP_SUCCESS" });
+			})
+			.catch((err) => {
+				dispatch({ type: "SIGNUP_FAIL", err });
+			});
+	};
+};
