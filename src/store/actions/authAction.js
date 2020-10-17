@@ -34,7 +34,6 @@ export const signOut = () => {
 	};
 };
 
-// Create Admin System account
 export const signUp = (credentials) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		const firebase = getFirebase();
@@ -48,6 +47,7 @@ export const signUp = (credentials) => {
 					firstName: credentials.firstName,
 					lastName: credentials.lastName,
 					role: credentials.role,
+					studentId: credentials.studentId,
 					faculty: credentials.faculty,
 				});
 			})

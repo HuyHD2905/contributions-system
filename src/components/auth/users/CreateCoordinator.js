@@ -11,6 +11,7 @@ class CreateCoordinator extends Component {
 		password: "",
 		firstName: "",
 		lastName: "",
+		studentId: "",
 		role: Role.Coordinator,
 		faculty: "",
 	};
@@ -28,7 +29,6 @@ class CreateCoordinator extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.signUp(this.state);
-		this.props.history.push("/");
 	};
 
 	render() {

@@ -10,6 +10,7 @@ class CreateManager extends Component {
 		password: "",
 		firstName: "",
 		lastName: "",
+		studentId: "",
 		role: Role.Manager,
 		faculty: "All",
 	};
@@ -21,8 +22,14 @@ class CreateManager extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.signUp(this.state);
-		this.props.history.push("/");
 	};
+
+	componentDidUpdate() {
+		const { authError } = this.props;
+		if (authError === null) {
+			this.props.history.push("/");
+		}
+	}
 
 	render() {
 		const { auth, authError, profile } = this.props;

@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { compose } from "redux";
 import { connect } from "react-redux";
-import Select from "react-select";
+import { isEmpty, repeat } from "lodash";
+import { firestoreConnect } from "react-redux-firebase";
 import { signUp } from "../../../store/actions/authAction";
-import { Role, Faculty } from "../../../config/common";
+import { Role } from "../../../config/common";
 
 class CreateStudent extends Component {
+	isLoaded = false;
 	state = {
 		email: "",
 		password: "",
 		firstName: "",
 		lastName: "",
+		studentId: "",
 		role: Role.Student,
 		faculty: "",
 	};
@@ -28,8 +32,22 @@ class CreateStudent extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.signUp(this.state);
-		this.props.history.push("/");
 	};
+
+	componentDidUpdate() {
+		const { users, profile } = this.props;
+		if (!this.isLoaded && !isEmpty(users) && !isEmpty(profile.faculty)) {
+			let newStudentId = users.filter(function (user) {
+				return user.role === Role.Student;
+			}).length;
+
+			this.setState({
+				studentId: `GCS${repeat("0", 2)}${newStudentId + 1}`,
+				faculty: profile.faculty,
+			});
+			this.isLoaded = true;
+		}
+	}
 
 	render() {
 		const { auth, authError, profile } = this.props;
@@ -65,29 +83,6 @@ class CreateStudent extends Component {
 						<input type="text" id="lastName" onChange={this.handleChange} />
 					</div>
 
-					<>
-						<label>Choose the faculty:</label>
-						<Select
-							styles={{
-								option: (provided, state) => ({
-									...provided,
-									borderBottom: "1px dotted pink",
-									color: state.isSelected ? "red" : "blue",
-									padding: 10,
-								}),
-								singleValue: (provided, state) => {
-									const opacity = state.isDisabled ? 0.5 : 1;
-									const transition = "opacity 300ms";
-
-									return { ...provided, opacity, transition };
-								},
-							}}
-							value={this.faculty}
-							onChange={(e) => this.handleSelectChange("faculty", e)}
-							options={Faculty}
-						/>
-					</>
-
 					<div className="input-field">
 						<button className="btn pink lighten-1 z-depth-0">
 							Create Account
@@ -108,6 +103,7 @@ const mapStateToProps = (state) => {
 		auth: state.firebase.auth,
 		authError: state.auth.authError,
 		profile: state.firebase.profile,
+		users: state.firestore.ordered.users,
 	};
 };
 
@@ -117,4 +113,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateStudent);
+export default compose(
+	connect(mapStateToProps, mapDispatchToProps),
+	firestoreConnect([{ collection: "users" }])
+)(CreateStudent);
