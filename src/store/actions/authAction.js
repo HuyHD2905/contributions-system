@@ -1,5 +1,3 @@
-import { Role } from "../../config/common";
-
 export const signIn = (credentials) => {
 	return (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();
@@ -44,6 +42,7 @@ export const signUp = (credentials) => {
 			.createUserWithEmailAndPassword(credentials.email, credentials.password)
 			.then((response) => {
 				return firestore.collection("users").doc(response.user.uid).set({
+					email: credentials.email,
 					firstName: credentials.firstName,
 					lastName: credentials.lastName,
 					role: credentials.role,

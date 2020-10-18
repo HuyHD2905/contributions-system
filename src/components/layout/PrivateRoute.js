@@ -18,10 +18,13 @@ class PrivateRoute extends Component {
 						<NavLink to="/create/manager">Create Manager</NavLink>
 					</li>
 					<li>
+						<NavLink to="/user/list">Manager List</NavLink>
+					</li>
+					<li>
 						<a onClick={signOut}>Logout</a>
 					</li>
 					<li>
-						<NavLink to="/" className="btn btn-floating pink lighten-1">
+						<NavLink to="/" className="btn pink lighten-1">
 							{profile.firstName !== undefined
 								? profile.firstName.charAt(0)
 								: null}
@@ -44,13 +47,13 @@ class PrivateRoute extends Component {
 						<NavLink to="/create/coordinator">Create Coordinator</NavLink>
 					</li>
 					<li>
-						<NavLink to="/create/student">Create Student</NavLink>
+						<NavLink to="/user/list">Coorinator List</NavLink>
 					</li>
 					<li>
 						<a onClick={signOut}>Logout</a>
 					</li>
 					<li>
-						<NavLink to="/" className="btn btn-floating pink lighten-1">
+						<NavLink to="/" className="btn pink lighten-1">
 							{profile.firstName !== undefined
 								? profile.firstName.charAt(0)
 								: null}
@@ -73,10 +76,13 @@ class PrivateRoute extends Component {
 						<NavLink to="/create/student">Create Student</NavLink>
 					</li>
 					<li>
+						<NavLink to="/user/list">Student List</NavLink>
+					</li>
+					<li>
 						<a onClick={signOut}>Logout</a>
 					</li>
 					<li>
-						<NavLink to="/" className="btn btn-floating pink lighten-1">
+						<NavLink to="/" className="btn pink lighten-1">
 							{profile.firstName !== undefined
 								? profile.firstName.charAt(0)
 								: null}
@@ -98,7 +104,7 @@ class PrivateRoute extends Component {
 					<a onClick={signOut}>Logout</a>
 				</li>
 				<li>
-					<NavLink to="/" className="btn btn-floating pink lighten-1">
+					<NavLink to="/" className="btn pink lighten-1">
 						{profile.firstName !== undefined
 							? profile.firstName.charAt(0)
 							: null}

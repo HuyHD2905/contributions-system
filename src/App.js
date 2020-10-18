@@ -7,6 +7,7 @@ import SignUp from "./components/auth/Signup";
 import CreateManager from "./components/auth/users/CreateManager";
 import CreateCooridnator from "./components/auth/users/CreateCoordinator";
 import CreateStudent from "./components/auth/users/CreateStudent";
+import UserList from "./components/users/UserList";
 
 class App extends Component {
 	render() {
@@ -21,6 +22,7 @@ class App extends Component {
 						<Route path="/create/manager" component={CreateManager} />
 						<Route path="/create/coordinator" component={CreateCooridnator} />
 						<Route path="/create/student" component={CreateStudent} />
+						<Route path="/user/list" component={UserList} />
 					</Switch>
 				</div>
 			</BrowserRouter>
