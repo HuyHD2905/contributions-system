@@ -1,4 +1,5 @@
 const initState = {
+	authError: null,
 	contributions: [
 		{
 			id: 1,
@@ -14,7 +15,16 @@ const initState = {
 };
 
 const contributionReducer = (state = initState, action) => {
-	return state;
+	switch (action.type) {
+		case "APPROVE_CONTRIBUTION":
+			return { ...state, authError: null };
+		case "APPROVE_CONTRIBUTION_SUCCESS":
+			return { ...state, authError: null };
+		case "APPROVE_CONTRIBUTION_FAIL":
+			return { ...state, authError: "Approve failed!" };
+		default:
+			return state;
+	}
 };
 
 export default contributionReducer;

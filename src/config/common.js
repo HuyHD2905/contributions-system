@@ -6,10 +6,10 @@ export const Role = {
 };
 
 export const Status = {
-	Pending: "PENDING",
-	Approved: "APPROVED",
-	Publish: "PUBLISH",
-	Reject: "REJECT",
+	Pending: "Pending",
+	Approved: "Approved",
+	Publish: "Publish",
+	Reject: "Reject",
 };
 
 export const Faculty = [

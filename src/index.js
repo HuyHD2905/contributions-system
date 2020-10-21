@@ -29,11 +29,9 @@ const store = createStore(
 
 store.firebaseAuthIsReady.then(() => {
 	ReactDOM.render(
-		<React.Fragment>
-			<Provider store={store}>
-				<App />
-			</Provider>
-		</React.Fragment>,
+		<Provider store={store}>
+			<App />
+		</Provider>,
 		document.getElementById("root")
 	);
 });
