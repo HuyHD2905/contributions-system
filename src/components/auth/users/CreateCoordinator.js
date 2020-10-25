@@ -11,8 +11,8 @@ class CreateCoordinator extends Component {
 		password: "",
 		firstName: "",
 		lastName: "",
-		studentId: "",
 		role: Role.Coordinator,
+		studentId: null,
 		faculty: "",
 	};
 

@@ -1,8 +1,8 @@
 export const Role = {
 	Admin: "Admin",
 	Student: "Student",
-	Manager: "Marketing Manager",
-	Coordinator: "Marketing Coordinator",
+	Manager: "Manager",
+	Coordinator: "Coordinator",
 };
 
 export const Status = {

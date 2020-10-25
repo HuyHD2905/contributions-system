@@ -19,3 +19,8 @@ textarea.materialize-textarea:focus:not([readonly]) {
 	border-color: #ec407a;
 	box-shadow: none;
 }
+
+form {
+	padding: 10px;
+	margin-top: 30px;
+}

@@ -16,6 +16,10 @@ const initState = {
 
 const contributionReducer = (state = initState, action) => {
 	switch (action.type) {
+		case "CREATE_CONTRIBUTION":
+			return { ...state, authError: null };
+		case "CREATE_CONTRIBUTION_SUCCESS":
+			return { ...state, authError: "Create failed!" };
 		case "APPROVE_CONTRIBUTION":
 			return { ...state, authError: null };
 		case "APPROVE_CONTRIBUTION_SUCCESS":

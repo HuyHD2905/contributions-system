@@ -6,11 +6,13 @@ import { Role } from "../../config/common";
 
 class Signup extends Component {
 	state = {
+		userId: "",
 		email: "",
 		password: "",
 		firstName: "",
 		lastName: "",
 		role: Role.Admin,
+		studentId: null,
 		faculty: "All",
 	};
 

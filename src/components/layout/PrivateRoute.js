@@ -50,6 +50,9 @@ class PrivateRoute extends Component {
 						<NavLink to="/user/list">Coorinator List</NavLink>
 					</li>
 					<li>
+						<NavLink to="/contribution/list">Contribution List</NavLink>
+					</li>
+					<li>
 						<a onClick={signOut}>Logout</a>
 					</li>
 					<li>
@@ -79,6 +82,9 @@ class PrivateRoute extends Component {
 						<NavLink to="/user/list">Student List</NavLink>
 					</li>
 					<li>
+						<NavLink to="/contribution/list">Contribution List</NavLink>
+					</li>
+					<li>
 						<a onClick={signOut}>Logout</a>
 					</li>
 					<li>
@@ -95,10 +101,17 @@ class PrivateRoute extends Component {
 			);
 		}
 
+		// Student
 		return (
 			<ul className="right">
 				<li>
 					<NavLink to="/"></NavLink>
+				</li>
+				<li>
+					<NavLink to="/contribution/list">Contribution List</NavLink>
+				</li>
+				<li>
+					<NavLink to="/contribution/create">Create Contribution</NavLink>
 				</li>
 				<li>
 					<a onClick={signOut}>Logout</a>

@@ -10,8 +10,8 @@ class CreateManager extends Component {
 		password: "",
 		firstName: "",
 		lastName: "",
-		studentId: "",
 		role: Role.Manager,
+		studentId: null,
 		faculty: "All",
 	};
 
@@ -24,12 +24,12 @@ class CreateManager extends Component {
 		this.props.signUp(this.state);
 	};
 
-	componentDidUpdate() {
-		const { authError } = this.props;
-		if (authError === null) {
-			this.props.history.push("/");
-		}
-	}
+	// componentDidUpdate() {
+	// 	const { authError } = this.props;
+	// 	if (authError === null) {
+	// 		this.props.history.push("/");
+	// 	}
+	// }
 
 	render() {
 		const { auth, authError, profile } = this.props;

@@ -49,8 +49,8 @@ class UserList extends Component {
 				faculty: item.faculty,
 			};
 		});
-		data.rows = studentsMap;
 
+		data.rows = studentsMap;
 		return data;
 	};
 

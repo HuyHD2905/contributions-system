@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { map, isEmpty, filter, get, upperFirst } from "lodash";
+import { map, isEmpty, filter, get } from "lodash";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
@@ -12,10 +12,11 @@ import {
 import { NavLink } from "react-router-dom";
 import { MDBDataTableV5 } from "mdbreact";
 import Checkbox from "rc-checkbox";
-import { saveAs } from "file-saver";
+import saveAs from "file-saver";
 import JSZipUtils from "jszip-utils";
-import { approve } from "../../store/actions/projectActions";
+import { approve } from "../../store/actions/contributionAction";
 import { Role, Status } from "../../config/common";
+import moment from "moment";
 
 class ContributionsList extends Component {
 	state = {
@@ -63,7 +64,7 @@ class ContributionsList extends Component {
 		let postsData = posts;
 
 		postsData = posts.filter((item) => {
-			return item.status === "pending";
+			return item.status === Status.Pending;
 		});
 
 		let postsMap = [];
@@ -71,7 +72,7 @@ class ContributionsList extends Component {
 
 		if (get(profile, "role", "") === Role.Manager) {
 			postsData = posts.filter((item) => {
-				return item.status === "approved";
+				return item.status === Status.Approved;
 			});
 			data.columns = marketingManagerColumns;
 		}
@@ -86,7 +87,7 @@ class ContributionsList extends Component {
 		if (get(profile, "role", "") === Role.Coordinator) {
 			postsData = posts.filter((item) => {
 				return (
-					item.status === "pending" &&
+					item.status === Status.Pending &&
 					item.faculty === get(profile, "faculty", "")
 				);
 			});
@@ -102,10 +103,10 @@ class ContributionsList extends Component {
 				title: item.title,
 				studentId: item.studentId,
 				studentName: item.studentName,
-				createdDateTime: item.createdDateTime,
-				fileUrl: (
+				createdDateTime: moment(item.createdDateTime).calendar(),
+				fileURL: (
 					<NavLink
-						to={`/contributionDetail/${item.id}`}
+						to={`/contribution/detail/${item.id}`}
 						style={{ color: "blue" }}
 					>
 						View File
@@ -131,16 +132,21 @@ class ContributionsList extends Component {
 					title: item.title,
 					studentId: item.studentId,
 					studentName: item.studentName,
-					createdDateTime: item.createdDateTime,
-					fileUrl: (
-						<NavLink to={`/viewDetail/${item.id}`} style={{ color: "blue" }}>
+					createdDateTime: moment(item.createdDateTime).calendar(),
+					fileURL: (
+						<NavLink
+							to={`/contribution/detail/${item.id}`}
+							style={{ color: "blue" }}
+						>
 							View Details
 						</NavLink>
 					),
 				};
+
 				if (get(profile, "role", "") === Role.Manager) {
 					data.faculty = item.faculty;
 				}
+
 				return data;
 			});
 		}
@@ -154,20 +160,25 @@ class ContributionsList extends Component {
 								color: this.getStatusColor(item.status),
 							}}
 						>
-							{upperFirst(item.status)}
+							{item.status}
 						</h5>
 					),
 					title: item.title,
-					createdDateTime: item.createdDateTime,
-					fileUrl: (
-						<NavLink to={`/viewDetail/${item.id}`} style={{ color: "blue" }}>
+					createdDateTime: moment(item.createdDateTime).calendar(),
+					fileURL: (
+						<NavLink
+							to={`/contribution/detail/${item.fileURL}`}
+							style={{ color: "blue" }}
+						>
 							View Details
 						</NavLink>
 					),
 				};
+
 				if (get(profile, "role", "") === Role.Manager) {
 					data.faculty = item.faculty;
 				}
+
 				return data;
 			});
 		}
@@ -178,6 +189,7 @@ class ContributionsList extends Component {
 
 	onDownload = () => {
 		const { checkItem } = this.state;
+
 		let zip = require("jszip")();
 		let file = checkItem[Object.keys(checkItem)[0]];
 		let allZip;
@@ -190,14 +202,12 @@ class ContributionsList extends Component {
 		});
 
 		allZip = zip.file("DOCS/document.docx", "asdiasudg", { binary: false });
-
 		zip
 			.generateAsync({ type: "blob", compression: "DEFLATE" })
 			.then(function (content) {
 				// see FileSaver.js
 				saveAs(content, "example.zip");
 			});
-
 		console.log(allZip);
 	};
 
@@ -205,16 +215,26 @@ class ContributionsList extends Component {
 		const { approve, profile } = this.props;
 
 		if (get(profile, "role", "") === Role.Manager) {
-			return approve(this.state.project_ids, "publish");
+			return approve(this.state.project_ids, Status.Publish);
 		}
 
 		if (get(profile, "role", "") === Role.Coordinator)
-			return approve(this.state.project_ids, "approved");
+			return approve(this.state.project_ids, Status.Approved);
 	};
 
 	render() {
-		const { auth, profile } = this.props;
+		const { auth, posts, profile } = this.props;
 		const { checkItem } = this.state;
+
+		if (isEmpty(posts) || isEmpty(profile)) {
+			return (
+				<div className="container">
+					<div>
+						<h1>No data to show</h1>
+					</div>
+				</div>
+			);
+		}
 
 		if (!auth.uid) {
 			return <Redirect to="/signin" />;
